@@ -1,34 +1,29 @@
-﻿#include <glut.h>
+#include <glut.h>
 float newCircleY = 22.0f;
 float x = 0.0;
 float angley = 0.0;
 GLUquadric* quadric;
-float circleRadius = 26.0f;  // Change this to your desired radius
-int circleSlices = 50;  // Change this as needed
-float circleX = 75.0f;  // X-coordinate of the center
-float circleY = 210.0f;  // Y-coordinate of the center
+float circleRadius = 26.0f;  
+int circleSlices = 50;  
+float circleX = 75.0f;  
+float circleY = 210.0f;  
 GLUquadric* quadric2;
-float circleX2 = 250.0f;  // X-coordinate of the center
+float circleX2 = 250.0f;  
 int screenWidth = 800;
-float carWidth = 300.0f;  // Width of the car
-float carSpeed = 0.2; // Initial car speed
-float gap = 5.0f;  // Gap between the cars
+float carWidth = 300.0f;  
+float carSpeed = 0.1; 
 // Function to check collision between two cars
 bool isCollision = false;
 void checkCollision() {
-    if (!isCollision) {
-        // Check if the car is within the collision area
-        if (x + carWidth >= 300 && x <= 1000 && angley >= 200 && angley <= 300) {
-            isCollision = true;
-            x -= 10.0; // Move back along the x-axis by -10 units
-        }
+    if (x >= 300 && angley>=-10) {
+        isCollision = true;
+        x -= 10;
+        
     }
     if (x <= carWidth - 200 && angley <= -85) {
         isCollision = true;
         angley += 10.0;
     }
-
-
     else {
         isCollision = false;
     }
@@ -55,32 +50,28 @@ void specFunc(int key, int x, int y) {
         }
         break;
     case GLUT_KEY_RIGHT:
-        carSpeed += 0.1; // Increase the car's speed when the up arrow key is pressed
+        carSpeed += 0.1; 
         break;
 
     case GLUT_KEY_LEFT:
-        if (carSpeed > 0.4) { // Compare with a threshold value
-            carSpeed -= 0.1;
-            x -= 3;
-            // Decrease the car's speed when the down arrow key is pressed
+        if (carSpeed > -0.4 && x > 0) { // Compare with a threshold value for maximum backward speed
+            carSpeed -= 0.3;  // Decrease the car's speed
+         
         }
         break;
-        // Add more cases for other keys if needed
-
     default:
         break;
     }
     glutPostRedisplay();
 }
 
-// Function to render graphics
 void display() {
     glClear(GL_COLOR_BUFFER_BIT);
 
 
     glBegin(GL_QUADS);
 
-    glColor3f(0.05f, 0.63f, 0.91f);
+    glColor3f(1.00f, 1.0f, 1.0f);
     glVertex2i(0, 800);          // Bottom-left corner
     glVertex2i(800, 800);        // Bottom-right corner
     glVertex2i(800, 350);      // Top-right corner
@@ -101,27 +92,40 @@ void display() {
     // house
     glPushMatrix();
     glTranslatef(-x, 0, 0);
+   
+      glBegin(GL_QUADS);
+    //flag
+    glColor3f(0.0f, 0.0f, 0.0f);
+    glVertex2i(800, 700);
+    glVertex2i(1600, 700);
+    glVertex2i(1600, 600);
+    glVertex2i(800, 600);
+    glEnd();
     glBegin(GL_QUADS);
-    // اسفلت
+    //flag
     glColor3f(1.0f, 1.0f, 1.0f);
-    glVertex2i(-540, 180);
-    glVertex2i(-440, 180);
-    glVertex2i(-440, 140);
-    glVertex2i(-540, 140);
-    glEnd(); glBegin(GL_QUADS);
-    // اسفلت
-    glColor3f(1.0f, 1.0f, 1.0f);
-    glVertex2i(-360, 180);
-    glVertex2i(-260, 180);
-    glVertex2i(-260, 140);
-    glVertex2i(-360, 140);
-    glEnd(); glBegin(GL_QUADS);
-    // اسفلت
-    glColor3f(1.0f, 1.0f, 1.0f);
-    glVertex2i(-180, 180);
-    glVertex2i(-80, 180);
-    glVertex2i(-80, 140);
-    glVertex2i(-180, 140);
+    glVertex2i(800, 600);
+    glVertex2i(1600, 600);
+    glVertex2i(1600, 500);
+    glVertex2i(800, 500);
+    glEnd();
+    //flag
+    glBegin(GL_QUADS);
+    glColor3f(0.04f, 0.47f, 0.24f);
+    glVertex2i(800, 500);
+    glVertex2i(1600, 500);
+    glVertex2i(1600, 400);
+    glVertex2i(800, 400);
+    glEnd();
+    glBegin(GL_TRIANGLES);
+
+    glColor3f(0.80f, 0.13f, 0.16f);
+    glVertex2i(800, 700);
+
+    glVertex2i(1100, 550);
+
+    glVertex2i(800, 400);
+
     glEnd();
     glBegin(GL_QUADS);
     // اسفلت
@@ -220,27 +224,48 @@ void display() {
     glVertex2i(770, 350);
     glVertex2i(530, 350);
     glEnd();
-
     // not important 
     glBegin(GL_TRIANGLES);
 
-    glColor3f(0.0f, 0.21f, 0.70f);
-    glVertex2i(650, 280);
+    glColor3f(0.03f, 0.24f, 0.73f);
+    glVertex2i(1350, 100);
 
-    glVertex2i(700, 235);
+    glVertex2i(1400, 40);
 
-    glVertex2i(600, 235);
+    glVertex2i(1300, 40);
 
     glEnd();
     glBegin(GL_TRIANGLES);
-    glColor3f(0.0f, 0.21f, 0.70f);
+    glColor3f(0.03f, 0.24f, 0.73f);
 
 
-    glVertex2i(600, 265);
+    glVertex2i(1350, 20);
 
-    glVertex2i(700, 265);
+    glVertex2i(1400, 80);
 
-    glVertex2i(650, 215);
+    glVertex2i(1300, 80);
+
+    glEnd();
+    // not important 
+    glBegin(GL_TRIANGLES);
+
+    glColor3f(0.03f, 0.24f, 0.73f);
+    glVertex2i(440, 320);
+
+    glVertex2i(500, 240);
+
+    glVertex2i(380, 240);
+
+    glEnd();
+    glBegin(GL_TRIANGLES);
+    glColor3f(0.03f, 0.24f, 0.73f);
+
+
+    glVertex2i(440, 220);
+
+    glVertex2i(500, 300);
+
+    glVertex2i(380, 300);
 
     glEnd();
     // door
@@ -260,7 +285,7 @@ void display() {
     glEnd();
     // coll
     glBegin(GL_POLYGON);
-    glColor3f(1.0f, 1.0f, 1.0f);
+    glColor3f(0.0f, 0.0f,0.0f);
     glVertex2i(950, 300);
     glVertex2i(1000, 280);
     glVertex2i(1000, 230);
@@ -318,7 +343,7 @@ void display() {
     // control car 
 
     glBegin(GL_POLYGON);
-    glColor3f(0.98f, 0.58f, 0.20f);
+    glColor3f(0.80f, 0.13f, 0.16f);
     glVertex3f(0.0f, 20.0f, 0.0f);
     glVertex3f(300.0f, 20.0f, 0.0f);
     glVertex3f(300.0f, 60.0f, 0.0f);
@@ -369,11 +394,16 @@ void display() {
 
 void update(int value) {
     if (!isCollision) {
-        x += carSpeed;
+        x += carSpeed; //responsiple for move the car
     }
 
-    if (x >= screenWidth) {
-        x = -carWidth;
+   if (x >= screenWidth) {
+       x = -carWidth;
+       // repeat screen
+  }
+
+    if (x < 0) {
+        x = 5; // Move the car forward by 5 units if it tries to exit the screen from the left
     }
 
     glutPostRedisplay();
@@ -381,11 +411,12 @@ void update(int value) {
 }
 
 
+
 int main(int argc, char** argv) {
     glutInit(&argc, argv);
     glutInitWindowSize(800, 800);
     glutInitWindowPosition(300, 20);
-    glutCreateWindow("ROAD");
+    glutCreateWindow("FREE PALESTINE");
     glutDisplayFunc(display);
     glutTimerFunc(10, update, 0); // Start the animation
     glutSpecialFunc(specFunc);
